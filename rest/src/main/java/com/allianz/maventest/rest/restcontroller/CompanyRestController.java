@@ -34,4 +34,10 @@ public class CompanyRestController {
         return new ResponseEntity<>(companyService.updateCompany(companyId, request), HttpStatus.OK);
     }
 
+    @DeleteMapping("{companyId}")
+    public ResponseEntity<Void> deleteCompany(@PathVariable int companyId) {
+        companyService.deleteCompany(companyId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

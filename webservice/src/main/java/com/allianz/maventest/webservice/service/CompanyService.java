@@ -32,10 +32,27 @@ public class CompanyService {
                 .orElseThrow(() -> new RuntimeException("Cannot update company with id: " + companyId));
     }
 
+    public void deleteCompany(int companyId) {
+        var companies = companyProvider.getCompanies();
+        var optionalCompany = companies
+                .stream()
+                .filter(company -> company.getId() == companyId)
+                .findFirst();
+        if (optionalCompany.isPresent()) {
+            deleteCompany(companies, optionalCompany.get());
+        } else {
+            throw new RuntimeException("Company with id:" + companyId + " is not found");
+        }
+    }
+
     private Company updateCompany(Company companyToUpdate, UpdateCompanyRequest request) {
         companyToUpdate.setLabel(request.getLabel());
         companyToUpdate.setDate(request.getDate());
         return companyToUpdate;
+    }
+
+    private void deleteCompany(List<Company> companies, Company companyToDelete) {
+        companies.remove(companyToDelete);
     }
 
 }

@@ -14,8 +14,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static java.util.Collections.emptyList;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -83,6 +83,39 @@ class CompanyServiceTest {
         assertNotNull(result);
         assertEquals(2, existingCompanies.size());
         assertEquals(result, existingCompanies.get(1));
+    }
+
+    @Test
+    void should_delete_company_ko_when_company_not_exist() {
+        // GIVEN
+        var companyId = 2;
+        var existingCompanies = new ArrayList<Company>();
+        existingCompanies.add(new Company(1, "allianz", LocalDate.of(2022, 10, 24)));
+
+        // WHEN
+        when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
+        var exception =
+                assertThrows(
+                        RuntimeException.class, () -> companyService.deleteCompany(companyId));
+
+        // THEN
+        assertEquals(
+                "Company with id:" + companyId + " is not found", exception.getMessage());
+    }
+
+    @Test
+    void should_delete_company_ok() {
+        // GIVEN
+        var companyId = 1;
+        var existingCompanies = new ArrayList<Company>();
+        existingCompanies.add(new Company(1, "allianz", LocalDate.of(2022, 10, 24)));
+
+        // WHEN
+        when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
+        companyService.deleteCompany(companyId);
+
+        // THEN
+        assertEquals(emptyList(), existingCompanies);
     }
 
 }
