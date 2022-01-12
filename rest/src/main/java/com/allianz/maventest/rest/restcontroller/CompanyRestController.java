@@ -4,9 +4,7 @@ import com.allianz.maventest.model.Company;
 import com.allianz.maventest.webservice.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,10 @@ public class CompanyRestController {
     public ResponseEntity<List<Company>> getAll() {
         return new ResponseEntity<>(companyService.getAllCompanies(), HttpStatus.OK);
     }
-    
+
+    @PostMapping
+    public ResponseEntity<Company> saveCompany(@RequestBody Company newCompany) {
+        return new ResponseEntity<>(companyService.saveCompany(newCompany), HttpStatus.CREATED);
+    }
+
 }

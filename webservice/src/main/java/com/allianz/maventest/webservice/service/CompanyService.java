@@ -16,5 +16,10 @@ public class CompanyService {
     public List<Company> getAllCompanies() {
         return companyProvider.getCompanies();
     }
-    
+
+    public Company saveCompany(Company newCompany) {
+        companyProvider.getCompanies().add(newCompany);
+        return newCompany;
+    }
+
 }

@@ -10,7 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,11 +19,6 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CompanyServiceTest {
-
-    private static final List<Company> COMPANIES = List.of(
-            new Company(1, "allianz", LocalDate.of(2022, 10, 24)),
-            new Company(2, "toto", LocalDate.of(2022, 7, 9))
-    );
 
     private CompanyService companyService;
 
@@ -32,15 +28,41 @@ class CompanyServiceTest {
     @BeforeEach
     void setup() {
         this.companyService = new CompanyService(companyProviderMock);
-        when(companyProviderMock.getCompanies()).thenReturn(COMPANIES);
     }
 
     @Test
     void should_get_companies_ok() {
-        var companies = companyService.getAllCompanies();
-        assertNotNull(companies);
-        assertEquals(2, companies.size());
-        assertEquals(COMPANIES, companies);
+        // GIVEN
+        var existingCompanies = Arrays.asList(
+                new Company(1, "allianz", LocalDate.of(2022, 10, 24)),
+                new Company(2, "toto", LocalDate.of(2022, 7, 9))
+        );
+
+        // WHEN
+        when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
+        var result = companyService.getAllCompanies();
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(existingCompanies, result);
+    }
+
+    @Test
+    void should_add_company_ok() {
+        // GIVEN
+        var existingCompanies = new ArrayList<Company>();
+        existingCompanies.add(new Company(1, "allianz", LocalDate.of(2022, 10, 24)));
+        var newCompany = new Company(2, "new company", LocalDate.of(2022, 5, 1));
+
+        // WHEN
+        when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
+        var result = companyService.saveCompany(newCompany);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(2, existingCompanies.size());
+        assertEquals(result, existingCompanies.get(1));
     }
 
 }
