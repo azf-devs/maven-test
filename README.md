@@ -10,7 +10,7 @@ Créer un nouveau projet avec 3 modules: rest/model/webservice
 Installer dans le module rest une application web basé sur Springboot
 
 ## Etape 3 : Créer un controlleur
-Créer les controller pour les 4 principaux verbes Http
+Créer les application.controller pour les 4 principaux verbes Http
 
 ## Etape 4 : Lire et exposer le fichier
 Lire le fichier json avec le contenu suivant :  
