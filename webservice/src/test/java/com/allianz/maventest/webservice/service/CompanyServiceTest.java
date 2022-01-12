@@ -3,6 +3,7 @@ package com.allianz.maventest.webservice.service;
 
 import com.allianz.maventest.model.Company;
 import com.allianz.maventest.webservice.provider.CompanyProvider;
+import com.allianz.maventest.webservice.request.UpdateCompanyRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -58,6 +59,25 @@ class CompanyServiceTest {
         // WHEN
         when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
         var result = companyService.saveCompany(newCompany);
+
+        // THEN
+        assertNotNull(result);
+        assertEquals(2, existingCompanies.size());
+        assertEquals(result, existingCompanies.get(1));
+    }
+
+    @Test
+    void should_update_company_ok() {
+        // GIVEN
+        var companyId = 2;
+        var updateCompanyRequest = new UpdateCompanyRequest("titi", LocalDate.now());
+        var existingCompanies = new ArrayList<Company>();
+        existingCompanies.add(new Company(1, "allianz", LocalDate.of(2022, 10, 24)));
+        existingCompanies.add(new Company(2, "toto", LocalDate.of(2022, 5, 6)));
+
+        // WHEN
+        when(companyProviderMock.getCompanies()).thenReturn(existingCompanies);
+        var result = companyService.updateCompany(companyId, updateCompanyRequest);
 
         // THEN
         assertNotNull(result);

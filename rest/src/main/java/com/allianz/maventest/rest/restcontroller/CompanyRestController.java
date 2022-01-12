@@ -1,6 +1,7 @@
 package com.allianz.maventest.rest.restcontroller;
 
 import com.allianz.maventest.model.Company;
+import com.allianz.maventest.webservice.request.UpdateCompanyRequest;
 import com.allianz.maventest.webservice.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class CompanyRestController {
     @PostMapping
     public ResponseEntity<Company> saveCompany(@RequestBody Company newCompany) {
         return new ResponseEntity<>(companyService.saveCompany(newCompany), HttpStatus.CREATED);
+    }
+
+    @PutMapping("{companyId}")
+    public ResponseEntity<Company> updateCompany(@PathVariable int companyId, @RequestBody UpdateCompanyRequest request) {
+        return new ResponseEntity<>(companyService.updateCompany(companyId, request), HttpStatus.OK);
     }
 
 }
