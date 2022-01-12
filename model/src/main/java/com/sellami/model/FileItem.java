@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @EntityScan
@@ -16,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 @Scope(value="session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class Label {
+public class FileItem {
 
     private Long id;
     private String label;
