@@ -3,8 +3,7 @@ package fr.allianz.rest.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import entities.Item;
+import fr.allianz.model.entities.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,6 +50,18 @@ public class ItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(expectedJson));
+    }
+
+    @Test
+    public void findById_CallsFindByIdInItemServiceAndReturnItem() throws Exception {
+
+        when(itemService.findByIdOrFail(1))
+                .thenReturn(new Item(1, "Allianz", LocalDate.of(2020, 1, 1)));
+
+        mockMvc.perform(get("/items/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{'id':  1, 'label':  'Allianz', 'date':  '2020-01-01'}"));
     }
 
     @Test

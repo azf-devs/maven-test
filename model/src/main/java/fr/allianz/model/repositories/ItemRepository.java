@@ -1,6 +1,6 @@
-package fr.allianz.webservice.repositories;
+package fr.allianz.model.repositories;
 
-import entities.Item;
+import fr.allianz.model.entities.Item;
 import java.util.List;
 import java.util.Optional;
 

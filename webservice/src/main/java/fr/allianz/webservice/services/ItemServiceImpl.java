@@ -1,9 +1,9 @@
 package fr.allianz.webservice.services;
 
-import entities.Item;
+import fr.allianz.model.entities.Item;
 import fr.allianz.webservice.exceptions.EntityNotFoundException;
 import fr.allianz.webservice.exceptions.InvalidEntityException;
-import fr.allianz.webservice.repositories.ItemRepository;
+import fr.allianz.model.repositories.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

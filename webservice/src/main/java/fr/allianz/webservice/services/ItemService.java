@@ -1,6 +1,6 @@
 package fr.allianz.webservice.services;
 
-import entities.Item;
+import fr.allianz.model.entities.Item;
 
 import java.util.List;
 

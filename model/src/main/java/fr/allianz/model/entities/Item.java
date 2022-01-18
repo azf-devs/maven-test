@@ -1,4 +1,4 @@
-package entities;
+package fr.allianz.model.entities;
 
 import lombok.Data;
 
