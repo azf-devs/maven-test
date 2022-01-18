@@ -8,4 +8,5 @@ public interface ItemService {
     List<Item> findAll();
     Item create(Item item);
     Item update(int id, Item item);
+    void delete(int id);
 }

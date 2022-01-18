@@ -8,4 +8,5 @@ public interface ItemRepository {
     List<Item> findAll();
     Item save(Item item);
     Optional<Item> findById(int id);
+    void delete(int id);
 }

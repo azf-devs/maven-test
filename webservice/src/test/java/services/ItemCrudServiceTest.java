@@ -6,10 +6,7 @@ import exceptions.InvalidEntityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repositories.ItemRepository;
-
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -85,5 +82,11 @@ public class ItemCrudServiceTest {
         when(itemRepository.findById(1)).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class,
                 () -> itemService.update(1, new Item("foo", LocalDate.of(2020, 1, 1))));
+    }
+
+    @Test
+    public void delete_RemovesItemFromRepository() {
+        itemService.delete(1);
+        verify(itemRepository, times(1)).delete(1);
     }
 }

@@ -48,4 +48,9 @@ public class ItemServiceImpl implements ItemService {
             throw new InvalidEntityException();
         }
     }
+
+    @Override
+    public void delete(int id) {
+        this.itemRepository.delete(id);
+    }
 }
