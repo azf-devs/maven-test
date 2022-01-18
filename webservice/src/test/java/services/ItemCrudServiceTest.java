@@ -89,4 +89,24 @@ public class ItemCrudServiceTest {
         itemService.delete(1);
         verify(itemRepository, times(1)).delete(1);
     }
+
+    @Test
+    public void findByIdOrFail_FindsItemFromRepository() {
+        when(itemRepository.findById(1))
+                .thenReturn(Optional.of(new Item(1, "Allianz", LocalDate.of(2020, 1, 1))));
+
+        Item item = itemService.findByIdOrFail(1);
+
+        assertEquals(new Item(1, "Allianz", LocalDate.of(2020, 1, 1)), item);
+    }
+
+    @Test
+    public void findByIdOrFail_GivenNonExistingId_ThrowsException() {
+        when(itemRepository.findById(1))
+                .thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> itemService.findByIdOrFail(1));
+    }
+
+
 }

@@ -33,13 +33,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item update(int id, Item item) {
         validateItem(item);
-
-        Optional<Item> oldItemResult = itemRepository.findById(id);
-        return oldItemResult.map(oldItem -> {
-                oldItem.setLabel(item.getLabel());
-                oldItem.setDate(item.getDate());
-                return itemRepository.save(oldItem);
-            }).orElseThrow(EntityNotFoundException::new);
+        Item oldItem = findByIdOrFail(id);
+        oldItem.setLabel(item.getLabel());
+        oldItem.setDate(item.getDate());
+        return itemRepository.save(oldItem);
     }
 
     private void validateItem(Item item) {
@@ -52,5 +49,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public void delete(int id) {
         this.itemRepository.delete(id);
+    }
+
+    @Override
+    public Item findByIdOrFail(int id) {
+        return itemRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }
