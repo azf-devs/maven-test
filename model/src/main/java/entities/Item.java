@@ -16,6 +16,10 @@ public class Item {
     @NotNull
     private LocalDate date;
 
+    public Item() {
+
+    }
+
     public Item(int id, String label) {
         this.id = id;
         this.label = label;
