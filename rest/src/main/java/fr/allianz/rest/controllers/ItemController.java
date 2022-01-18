@@ -27,4 +27,10 @@ public class ItemController {
         Item newItem = itemService.create(item);
         return new ResponseEntity<>(newItem, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Item> update(@PathVariable int id, @RequestBody Item newItem) {
+        Item item = itemService.update(id, newItem);
+        return ResponseEntity.ok(item);
+    }
 }

@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.mockito.Mockito.*;
@@ -73,5 +73,23 @@ public class ItemControllerTest {
     private String itemToJson(Item item) throws JsonProcessingException {
         ObjectWriter writer = objectMapper.writer().withDefaultPrettyPrinter();
         return writer.writeValueAsString(item);
+    }
+
+    @Test
+    public void update_ShouldItemServiceAndReturnUpdatedItem() throws Exception {
+        String newLabel = "Foo-Updated";
+        LocalDate newDate = LocalDate.of(2020, 2, 2);
+        Item itemToUpdate = new Item(newLabel, newDate);
+
+        when(itemService.update(1, itemToUpdate))
+                .thenReturn(new Item(1, newLabel, newDate));
+
+        RequestBuilder requestBuilder = put("/items/1")
+                .content(itemToJson(itemToUpdate))
+                .contentType(MediaType.APPLICATION_JSON);
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json("{'id': 1, 'label': 'Foo-Updated', 'date':  '2020-02-02'}"));
     }
 }
