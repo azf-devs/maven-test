@@ -1,4 +1,4 @@
-package repositories;
+package fr.allianz.webservice.repositories;
 
 import entities.Item;
 import java.util.List;

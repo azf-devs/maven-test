@@ -1,4 +1,4 @@
-package exceptions;
+package fr.allianz.webservice.exceptions;
 
 public class EntityNotFoundException extends BusinessException {
     public EntityNotFoundException(String message) {

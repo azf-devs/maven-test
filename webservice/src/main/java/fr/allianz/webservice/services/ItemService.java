@@ -1,4 +1,4 @@
-package services;
+package fr.allianz.webservice.services;
 
 import entities.Item;
 

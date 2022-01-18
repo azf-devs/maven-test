@@ -1,4 +1,4 @@
-package exceptions;
+package fr.allianz.webservice.exceptions;
 
 public class BusinessException extends RuntimeException {
 

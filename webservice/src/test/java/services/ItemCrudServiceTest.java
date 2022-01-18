@@ -1,11 +1,13 @@
 package services;
 
 import entities.Item;
-import exceptions.EntityNotFoundException;
-import exceptions.InvalidEntityException;
+import fr.allianz.webservice.exceptions.EntityNotFoundException;
+import fr.allianz.webservice.exceptions.InvalidEntityException;
+import fr.allianz.webservice.services.ItemService;
+import fr.allianz.webservice.services.ItemServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import repositories.ItemRepository;
+import fr.allianz.webservice.repositories.ItemRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

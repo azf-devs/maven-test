@@ -1,18 +1,19 @@
-package services;
+package fr.allianz.webservice.services;
 
 import entities.Item;
-import exceptions.EntityNotFoundException;
-import exceptions.InvalidEntityException;
+import fr.allianz.webservice.exceptions.EntityNotFoundException;
+import fr.allianz.webservice.exceptions.InvalidEntityException;
+import fr.allianz.webservice.repositories.ItemRepository;
 import lombok.RequiredArgsConstructor;
-import repositories.ItemRepository;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
+@Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
