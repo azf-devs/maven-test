@@ -54,7 +54,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void create_ShouldCallItemServiceAndReturnItem() throws Exception {
+    public void create_ShouldCallCreateOnItemServiceAndReturnItem() throws Exception {
 
         Item itemToCreate = new Item("Foo-Allianz", LocalDate.of(2020, 1, 1));
 
@@ -76,7 +76,7 @@ public class ItemControllerTest {
     }
 
     @Test
-    public void update_ShouldItemServiceAndReturnUpdatedItem() throws Exception {
+    public void update_ShouldCallUpdateOnItemServiceAndReturnUpdatedItem() throws Exception {
         String newLabel = "Foo-Updated";
         LocalDate newDate = LocalDate.of(2020, 2, 2);
         Item itemToUpdate = new Item(newLabel, newDate);
@@ -91,5 +91,12 @@ public class ItemControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json("{'id': 1, 'label': 'Foo-Updated', 'date':  '2020-02-02'}"));
+    }
+
+    @Test
+    public void delete_ShouldCallDeleteOnItemService() throws Exception {
+        mockMvc.perform(delete("/items/1"))
+                .andExpect(status().isNoContent());
+        verify(itemService, times(1)).delete(1);
     }
 }
