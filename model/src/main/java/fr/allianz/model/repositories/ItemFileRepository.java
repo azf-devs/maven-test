@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.allianz.model.entities.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -22,11 +23,14 @@ public class ItemFileRepository implements ItemRepository {
 
     private List<Item> items;
 
+    @Value("${allianz.model.items-file}")
+    private String itemsFile;
+
     @PostConstruct
     private void init() {
         try {
             items = objectMapper.readValue(Item.class
-                    .getResourceAsStream("/items.json"), new TypeReference<>() {});
+                    .getResourceAsStream(itemsFile), new TypeReference<>() {});
             items.sort(Comparator.comparing(Item::getId));
             lastId = items.get(items.size() - 1).getId();
         } catch (IOException e) {
